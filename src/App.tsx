@@ -53,7 +53,7 @@ class App extends React.Component<{}, AppState> {
   };
 
   handleOpenCart = (event: any) => {
-    this.setState({ cartOpen: true });
+    this.setState({ cart: Helper.getCart(), cartOpen: true });
   };
 }
 
