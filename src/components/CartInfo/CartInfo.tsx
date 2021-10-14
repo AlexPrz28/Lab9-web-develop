@@ -37,7 +37,7 @@ const CartInfo: React.FC<CartInfoProps> = (props) => {
           </Grid>
           <Grid item lg={10} container>
             <Grid item lg={7}>
-              <Typography className="productName">
+              <Typography className="productNameCart">
                 {lineItem.product.name}
               </Typography>
             </Grid>
