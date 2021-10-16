@@ -28,6 +28,16 @@ class Cart {
     }
   }
 
+  removeItem(sku: Sku): void {
+    var newLineItems: [LineItem] = [] as any;
+    this.lineItems.forEach((item) => {
+      if (item.sku.id === sku.id) {
+        newLineItems.push(item);
+      }
+    });
+    this.lineItems = newLineItems;
+  }
+
   getNumberOfItems() {
     var numberOfItems = 0;
 

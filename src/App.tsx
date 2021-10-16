@@ -7,6 +7,7 @@ import Routes from "./components/Routes";
 import CartModal from "./containers/CartModal/CartModal";
 import Cart from "./types/Cart";
 import Helper from "./tools/SessionStorageHelper";
+import Sku from "./types/Sku";
 
 interface AppState {
   cartOpen: boolean;
@@ -38,6 +39,7 @@ class App extends React.Component<{}, AppState> {
             isCartVisible={this.state.cartOpen}
             closeCart={this.handleCloseCart}
             cart={this.state.cart}
+            removeCart={this.handleRemoveCart}
           />
         </BrowserRouter>
       </React.Fragment>
@@ -54,6 +56,12 @@ class App extends React.Component<{}, AppState> {
 
   handleOpenCart = (event: any) => {
     this.setState({ cart: Helper.getCart(), cartOpen: true });
+  };
+
+  handleRemoveCart = (event: any, sku: Sku) => {
+    this.state.cart.removeItem(sku);
+    Helper.updateCart(this.state.cart);
+    this.setState({ cart: Helper.getCart() });
   };
 }
 
