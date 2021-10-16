@@ -3,46 +3,58 @@ import Product from "./Product";
 import Sku from "./Sku";
 
 class Cart {
-    lineItems: [LineItem] = [] as any;
+  lineItems: [LineItem] = [] as any;
 
-    addItem(product: Product, sku: Sku, quantity: number, price: number) : void {
-        const lineItem = {} as LineItem;
-        lineItem.product = product;
-        lineItem.sku = sku;
-        lineItem.quantity = quantity;
-        lineItem.unitPrice = price;
-        lineItem.totalPrice = quantity * price;
+  addItem(product: Product, sku: Sku, quantity: number, price: number): void {
+    var existingSku = false;
+    this.lineItems.forEach((item) => {
+      console.log("item sku: " + item.sku.id);
+      console.log("new sku" + sku.id);
+      if (item.sku.id === sku.id) {
+        item.quantity += quantity;
+        item.totalPrice = item.unitPrice * item.quantity;
+        existingSku = true;
+      }
+    });
+    if (!existingSku) {
+      const lineItem = {} as LineItem;
+      lineItem.product = product;
+      lineItem.sku = sku;
+      lineItem.quantity = quantity;
+      lineItem.unitPrice = price;
+      lineItem.totalPrice = quantity * price;
 
-        this.lineItems.push(lineItem);
+      this.lineItems.push(lineItem);
     }
+  }
 
-    getNumberOfItems() {
-        var numberOfItems = 0;
+  getNumberOfItems() {
+    var numberOfItems = 0;
 
-        this.lineItems.forEach( (lineItem) => {
-            numberOfItems += lineItem.quantity;
-        });
+    this.lineItems.forEach((lineItem) => {
+      numberOfItems += lineItem.quantity;
+    });
 
-        return numberOfItems;
-    }
+    return numberOfItems;
+  }
 
-    getSubtotal() {
-        var subTotal = 0;
+  getSubtotal() {
+    var subTotal = 0;
 
-        this.lineItems.forEach( (lineItem) => {
-            subTotal += lineItem.totalPrice;
-        });
+    this.lineItems.forEach((lineItem) => {
+      subTotal += lineItem.totalPrice;
+    });
 
-        return subTotal;
-    }
+    return subTotal;
+  }
 
-    getTax() {
-        return this.getSubtotal() * 0.16;    
-    }
-    
-    getTotal() {
-        return this.getSubtotal() + this.getTax();    
-    }
+  getTax() {
+    return this.getSubtotal() * 0.16;
+  }
+
+  getTotal() {
+    return this.getSubtotal() + this.getTax();
+  }
 }
 
 export default Cart;
